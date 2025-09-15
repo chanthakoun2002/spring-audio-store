@@ -30,13 +30,13 @@ Take this opportunity to create or add to a simple resume portfolio to highlight
 
 ## Changelog (C–J)
 
-| Prompt | File(s) | Lines | Changes |
-|--------|------|-------|--------------|
-| C |  |  |  |
-| D |  |  |  |
-| E |  |  |  |
-| F |  |  |  |
-| G |  |  |  |
-| H |  |  |  |
-| I |  |  |  |
-| J |  |  |  |
+| Prompt | File(s)         | Lines                         | Changes                                                                                                       |
+|--------|-----------------|-------------------------------|---------------------------------------------------------------------------------------------------------------|
+| C | mainscreen.html | 14, 19-20, 22, 31, 36, 54, 72 | Added store name (hi-fi audio), changed parts/producrts headings and labels, updated table labels and buttons |
+| D |                 |                               |                                                                                                               |
+| E |                 |                               |                                                                                                               |
+| F |                 |                               |                                                                                                               |
+| G |                 |                               |                                                                                                               |
+| H |                 |                               |                                                                                                               |
+| I |                 |                               |                                                                                                               |
+| J |                 |                               |                                                                                                               |

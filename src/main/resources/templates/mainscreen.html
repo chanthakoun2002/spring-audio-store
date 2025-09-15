@@ -19,6 +19,7 @@
     <h1>Hi-Fi Audio</h1>
     <p class="subtitle">Record Players & Music Equipment</p>
     <hr>
+    <a th:href="@{/about}" class="btn btn-primary mt-3">About</a>
     <h2>Components (Parts)</h2>
     <form th:action="@{/mainscreen}">
         Filter: <input type="text" name="partkeyword" id="partkeyword" size="50" th:value="${partkeyword}" required />

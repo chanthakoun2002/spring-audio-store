@@ -27,3 +27,16 @@ Take this opportunity to create or add to a simple resume portfolio to highlight
 
 
 -- test comment to test connection to repository
+
+## Changelog (C–J)
+
+| Prompt | File(s) | Lines | Changes |
+|--------|------|-------|--------------|
+| C |  |  |  |
+| D |  |  |  |
+| E |  |  |  |
+| F |  |  |  |
+| G |  |  |  |
+| H |  |  |  |
+| I |  |  |  |
+| J |  |  |  |

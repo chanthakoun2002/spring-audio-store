@@ -18,11 +18,18 @@
 <div class="container">
     <h1>Hi-Fi Audio</h1>
     <p class="subtitle">Record Players & Music Equipment</p>
+
     <hr>
     <nav class="mb-3">
         <a th:href="@{/mainscreen}" class="btn btn-primary">Home</a>
         <a th:href="@{/about}" class="btn btn-primary">About</a>
     </nav>
+    <div th:if="${message}"
+         th:class="'alert alert-' + ${messageType} + ' alert-dismissible fade show'"
+         role="alert">
+        <span th:text="${message}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <hr>
     <h2>Components (Parts)</h2>
     <form th:action="@{/mainscreen}">
@@ -49,9 +56,11 @@
             <td th:text="${tempPart.name}">1</td>
             <td th:text="${tempPart.price}">1</td>
             <td th:text="${tempPart.inv}">1</td>
-            <td><a th:href="@{/showPartFormForUpdate(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
+            <td>
+                <a th:href="@{/showPartFormForUpdate(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
                 <a th:href="@{/deletepart(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3"
                    onclick="if(!(confirm('Are you sure you want to delete this part?')))return false">Delete</a>
+
             </td>
         </tr>
         </tbody>
@@ -71,6 +80,7 @@
     </script>
     <br><br>
     <a th:href="@{/showFormAddProduct}" class="btn btn-primary btn-sm mb-3">Add Product</a>
+<!--    <div th:if="${message}" th:class="'alert alert-' + ${messageType}" role="alert" th:text="${message}"></div>-->
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
@@ -85,13 +95,19 @@
             <td th:text="${tempProduct.name}">1</td>
             <td th:text="${tempProduct.price}">1</td>
             <td th:text="${tempProduct.inv}">1</td>
-            <td><a th:href="@{/showProductFormForUpdate(productID=${tempProduct.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
+            <td>
+                <a th:href="@{/showProductFormForUpdate(productID=${tempProduct.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
                 <a th:href="@{/deleteproduct(productID=${tempProduct.id})}" class="btn btn-primary btn-sm mb-3"
                    onclick="if(!(confirm('Are you sure you want to delete this product?')))return false">Delete</a>
+                <form th:action="@{'/products/' + ${tempProduct.id} + '/buy'}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-success btn-sm mb-3">Buy Now</button>
+                </form>
             </td>
+
         </tr>
         </tbody>
     </table>
 </div>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

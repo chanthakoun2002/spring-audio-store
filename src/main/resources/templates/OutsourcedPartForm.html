@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" lang="eng">
 <head>
     <meta charset="UTF-8">
     <title>Part Form</title>
@@ -22,7 +21,18 @@
 <p><input type="text" th:field="*{inv}" placeholder="Inventory" class="form-control mb-4 col-4"/></p>
     <p th:if="${#fields.hasErrors('inv')}" th:errors="*{inv}">Inventory Error</p>
 
+    <label for="min">Minimum Stock</label>
+    <input type="text" id="min" th:field="*{min}" placeholder="Minimum Stock" class="form-control mb-4 col-4" />
+    <div class="text-danger" th:if="${#fields.hasErrors('min')}" th:errors="*{min}"></div>
+
+    <label for="max">Maximum Stock</label>
+    <input type="text" id="max" th:field="*{max}" placeholder="Maximum Stock" class="form-control mb-4 col-4" />
+    <div class="text-danger" th:if="${#fields.hasErrors('max')}" th:errors="*{max}"></div>
+
     <p><input type="text" th:field="*{companyName}" placeholder="Company Name" class="form-control mb-4 col-4"/></p>
+
+    <div class="text-danger" th:if="${#fields.hasGlobalErrors()}"
+         th:each="e: ${#fields.globalErrors()}" th:text="${e}"></div>
 
 <p><input type="submit" value="Submit" /></p>
 </form>

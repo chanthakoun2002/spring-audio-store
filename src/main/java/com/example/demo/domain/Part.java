@@ -1,9 +1,12 @@
 package com.example.demo.domain;
 
 import com.example.demo.validators.ValidDeletePart;
+import com.example.demo.validators.ValidInventoryRange;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +22,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="part_type",discriminatorType = DiscriminatorType.INTEGER)
 @Table(name="Parts")
+@ValidInventoryRange
 public abstract class Part implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +37,33 @@ public abstract class Part implements Serializable {
     @JoinTable(name="product_part", joinColumns = @JoinColumn(name="part_id"),
             inverseJoinColumns=@JoinColumn(name="product_id"))
     Set<Product> products= new HashSet<>();
+
+    //allow for min and max of parts in table
+    @NotNull(message = "Minimum must not be null")
+    @Min(value = 0, message = "Minimum must be less than 0")
+    @Column(name = "min_inv")
+    private Integer min;
+
+    @NotNull(message = "Minimum must not be null")
+    @Min(value = 0, message = "Maximum must be greater than 0")
+    @Column(name = "max_inv")
+    private Integer max;
+
+    public void setMin(Integer min) {
+        this.min = min;
+    }
+
+    public Integer getMax() {
+        return max;
+    }
+
+    public Integer getMin() {
+        return min;
+    }
+
+    public void setMax(Integer max) {
+        this.max = max;
+    }
 
     public Part() {
     }
@@ -107,4 +138,6 @@ public abstract class Part implements Serializable {
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
     }
+
+
 }

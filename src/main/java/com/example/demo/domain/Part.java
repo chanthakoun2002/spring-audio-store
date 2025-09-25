@@ -1,10 +1,8 @@
 package com.example.demo.domain;
 
-import com.example.demo.validators.ValidDeletePart;
 import com.example.demo.validators.ValidInventoryRange;
 
 import javax.persistence.*;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -18,7 +16,6 @@ import java.util.Set;
  *
  */
 @Entity
-@ValidDeletePart
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="part_type",discriminatorType = DiscriminatorType.INTEGER)
 @Table(name="Parts")
@@ -40,11 +37,11 @@ public abstract class Part implements Serializable {
 
     //allow for min and max of parts in table
     @NotNull(message = "Minimum must not be null")
-    @Min(value = 0, message = "Minimum must be less than 0")
+    @Min(value = 0, message = "Minimum must be greater or equal to 0")
     @Column(name = "min_inv")
     private Integer min;
 
-    @NotNull(message = "Minimum must not be null")
+    @NotNull(message = "Maximum must not be null")
     @Min(value = 0, message = "Maximum must be greater than 0")
     @Column(name = "max_inv")
     private Integer max;

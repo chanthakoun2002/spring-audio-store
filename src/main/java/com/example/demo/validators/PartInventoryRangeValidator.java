@@ -5,6 +5,7 @@ import com.example.demo.domain.Part;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+
 public class PartInventoryRangeValidator implements ConstraintValidator<ValidInventoryRange, Part> {
 
     @Override
@@ -18,7 +19,18 @@ public class PartInventoryRangeValidator implements ConstraintValidator<ValidInv
 
         if (min == null || max == null) return true;
 
-        if (min > max) return false;
+        if (min > max) {
+            // if one is incorrect then pass to both error fields
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate("Min must not be greater than Max").addPropertyNode("min").addConstraintViolation();
+            context.buildConstraintViolationWithTemplate("Max must be greater than Min").addPropertyNode("max").addConstraintViolation();
+            return false;
+        }
+
         return inv >= min && inv <= max;
+
+        // this is here to make sure the part test for validation is triggered correctly
+//        if (min > max) return true;
+//        return inv >= min && inv <= max;
     }
 }

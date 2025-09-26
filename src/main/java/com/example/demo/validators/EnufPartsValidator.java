@@ -60,7 +60,7 @@ public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, P
                 if (remaining < minVal) {
                     constraintValidatorContext.disableDefaultConstraintViolation();
                     constraintValidatorContext
-                            .buildConstraintViolationWithTemplate(String.format("Not enough %s(s). Remaining would be %d.", p.getName(), remaining))
+                            .buildConstraintViolationWithTemplate(String.format("Not Enough %s(s) to fulfill request. Current Stock Is %s.", p.getName(), p.getInv()))
                             .addPropertyNode("inv")
                             .addConstraintViolation();
                     return false;

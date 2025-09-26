@@ -28,8 +28,8 @@
     <p><input type="text" th:field="*{inv}" placeholder="Inventory" class="form-control mb-4 col-4"/></p>
 
     <p>
-    <div th:if="${#fields.hasAnyErrors()}">
-    <ul><li th:each="err: ${#fields.allErrors()}" th:text="${err}"></li></ul>
+    <div class="text-danger" th:if="${#fields.hasAnyErrors()}">
+    <ul><li  class="text-danger" th:each="err: ${#fields.allErrors()}" th:text="${err}"></li></ul>
     </div>
     </p>
     <p><input type="submit" value="Submit" /></p>

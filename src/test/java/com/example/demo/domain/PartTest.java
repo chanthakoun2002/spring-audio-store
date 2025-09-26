@@ -169,7 +169,7 @@ class PartTest {
     }
 
 
-    //tests for min/max
+    //tests for min/max get and sets
     @Test
     void setAndGetMin() {
         partIn.setMin(3);

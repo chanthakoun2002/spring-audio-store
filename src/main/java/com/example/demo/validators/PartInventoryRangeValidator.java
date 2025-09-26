@@ -27,6 +27,20 @@ public class PartInventoryRangeValidator implements ConstraintValidator<ValidInv
             return false;
         }
 
+        if (inv < min) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate("Inventory cannot be less than Min").addPropertyNode("min").addConstraintViolation();
+            return false;
+
+        }
+
+        if (inv > max) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate("Inventory cannot exceed Max").addPropertyNode("max").addConstraintViolation();
+            return false;
+
+        }
+
         return inv >= min && inv <= max;
 
         // this is here to make sure the part test for validation is triggered correctly

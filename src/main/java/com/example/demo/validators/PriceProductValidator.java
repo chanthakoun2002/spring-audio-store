@@ -49,4 +49,6 @@ public class PriceProductValidator implements ConstraintValidator<ValidProductPr
             return true;
         }
     }
+
+
 }

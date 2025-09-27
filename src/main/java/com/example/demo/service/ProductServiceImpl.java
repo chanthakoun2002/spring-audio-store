@@ -7,6 +7,7 @@ import com.example.demo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,5 +66,17 @@ public class ProductServiceImpl implements ProductService{
             return productRepository.search(keyword);
         }
         return (List<Product>) productRepository.findAll();
+    }
+
+    //will decremenrt item in table by 1 if found
+    @Override
+    @Transactional
+    public boolean buyOne(long productId) {
+        return productRepository.findById(productId).map(p -> {
+            if (p.getInv() <= 0) return false;
+            p.setInv(p.getInv() - 1);
+            productRepository.save(p);
+            return true;
+        }).orElse(false);
     }
 }

@@ -34,6 +34,7 @@ public class AddInhousePartController{
         InhousePart inhousepart=new InhousePart();
         theModel.addAttribute("inhousepart",inhousepart);
         return "InhousePartForm";
+
     }
 
     @PostMapping("/showFormAddInPart")

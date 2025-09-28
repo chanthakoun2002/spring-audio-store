@@ -2,11 +2,20 @@ package com.example.demo.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.ConstraintViolation;
+import java.util.Set;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Project: demoDarbyFrameworks2-master
@@ -22,11 +31,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PartTest {
     Part partIn;
     Part partOut;
+
     @BeforeEach
     void setUp() {
         partIn=new InhousePart();
         partOut=new OutsourcedPart();
     }
+
     @Test
     void getId() {
         Long idValue=4L;
@@ -156,4 +167,76 @@ class PartTest {
         partOut.setId(1l);
         assertEquals(partIn.hashCode(),partOut.hashCode());
     }
+
+
+    //tests for min/max get and sets
+    @Test
+    void setAndGetMin() {
+        partIn.setMin(3);
+        assertEquals(3, partIn.getMin());
+        partOut.setMin(3);
+        assertEquals(3, partOut.getMin());
+    }
+
+    @Test
+    void setAndGetMax() {
+        partIn.setMax(9);
+        assertEquals(9, partIn.getMax());
+
+        // Outsourced
+        partOut.setMax(9);
+        assertEquals(9, partOut.getMax());
+    }
+
+    // Test below check to make sure the validation for parts work correctly and does not save incorrect data regarding
+    // Min Max fields and does not conflict with inventory
+    // bean validation
+    private Validator validator;
+
+    @BeforeEach
+    void setUpValidator() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        this.validator = factory.getValidator();
+    }
+
+    @Test
+    void MinGreaterThanMaxIsInvalid() {
+        // This test to see is the validation will fail when min is set higher than max
+
+        // InhousePart
+        partIn.setMin(10);
+        partIn.setMax(5);
+        partIn.setInv(11);
+        Set<ConstraintViolation<Part>> In = validator.validate(partIn);
+        assertFalse(In.isEmpty(), "InhousePart: expected violation when min > max");
+
+        // OutsourcedPart
+        partOut.setMin(10);
+        partOut.setMax(5);
+        partOut.setInv(7);
+        Set<ConstraintViolation<Part>> Out = validator.validate(partOut);
+        assertFalse(Out.isEmpty(), "Outsourcedpart: expected violation when min > max");
+    }
+
+    @Test
+    void inventoryValidWithinMinMax() {
+        // This test to see if the inventory Min Max Validation Correctly runs
+
+        // InhousePart
+        partIn.setMin(2);
+        partIn.setMax(8);
+        partIn.setInv(5);
+        Set<ConstraintViolation<Part>> In = validator.validate(partIn);
+        assertTrue(In.isEmpty(), "InhousePart: expected no violations when inv is within range");
+
+        // OutsourcedPart
+        partOut.setMin(2);
+        partOut.setMax(8);
+        partOut.setInv(5);
+        Set<ConstraintViolation<Part>> Out = validator.validate(partOut);
+        assertTrue(Out.isEmpty(), "OutsourcedPart: expected no violations when inv is within range");
+    }
+
+
+    
 }
